@@ -8,27 +8,9 @@ Want to cover some of the niggles associated with using Docker on Mac.
 
 The images which rely on code use Python.
 
-# 1 - Selecting a base image
+## Managing Docker objects
 
-I want to find out whether a particular image comes with a command or which version it uses:
-
-```
-docker run --rm ubuntu:22.04 curl --help
-```
-
-If I want to check several things, or poke about in the base image more generally:
-
-```
-docker run --rm -it ubuntu:22.04 /bin/bash
-```
-
-Note that `-it` is the same as `-i -t`, as distinct from `--rm` which is a single option. Hence only one dash for the former.
-
-View process in host top. How to do on Mac?
-
-# 2 - Managing Docker objects
-
-## Containers
+### Containers
 
 First, see what containers are there. Docker doesn't like to tie people down so it has three commands for doing exactly the same thing (listing *running* containers):
 
@@ -80,7 +62,7 @@ This approach also works for stopping containers and removing other docker objec
 
 We can avoid some headaches by using `--rm` with the `docker run` command.
 
-## Images
+### Images
 
 To list all images:
 
@@ -118,4 +100,48 @@ We can combine the `ls` command with the `rm` command as we did with the contain
 
 ```
 docker image rm $(docker image ls -a -q)
+```
+
+#### Intermediate vs. dangling images
+
+There is a helpful explanation [here](https://medium.com/@krishnakummar/dangling-none-none-docker-images-714514627fb#:~:text=Dangling%20%3A%20docker%20images,-Krishna&text=These%20intermediate%20images%20are%20important,a%20wastage%20of%20disk%20space.&text=These%20%3A%20are%20called%20as%20the,images%20needs%20to%20be%20pruned.)
+
+The short version is that some images which appear as `<none>  <none>` when we run `docker image ls -a`
+are useful and some aren't. We can get rid of the ones we don't need with:
+
+```
+docker image rm $(docker images -f "dangling=true" -q)
+```
+
+### Volumes
+
+It's rarer to have to deal with volumes day-to-day but they can build up. Bear in mind though that if you use, for example, a Postgres image, all of its data will be in a volume. So be careful.
+
+List:
+
+```
+docker volume ls
+```
+
+Remove all:
+
+```
+docker volume rm $(docker volume ls -q)
+```
+
+### Networks
+
+It's even rarer to have to worry about networks but every now and again `docker compose` will die without
+properly cleaning up, then fail to start again.
+
+List:
+
+```
+docker network ls
+```
+
+Remove *almost* all:
+
+```
+docker network rm $(docker network ls -q)
 ```

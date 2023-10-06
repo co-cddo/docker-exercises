@@ -4,4 +4,5 @@ FROM ubuntu:20.04
 
 # There's more than one way to specify a command in Docker. This is the simplest way and,
 ## all things being equal, the preferred
+# Note that this is JSON
 CMD ["echo", "Hello World"]
