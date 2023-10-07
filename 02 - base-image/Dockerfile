@@ -6,10 +6,9 @@ FROM ubuntu:22.04
 # Add an env var and some options to stop it asking us questions and installing things which it
 ## thinks are helpful but aren't strictly needed
 # Start by installing some text editors and basic tools.
-# If you think I'm lame for using Nano, I don't care
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nano vim emacs \
-    curl wget
+    curl wget iproute2
 
 
 # See the main README (1) for help on working out what other packages we need

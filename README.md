@@ -1,12 +1,11 @@
-# Docker Exercises
+# CDDO Graduate Developer Programme - Docker Exercises
 
-A set of short, practical exercises to support learning about Docker. The focus is on using containers for local development.
+A set of short, practical exercises to support learning about Docker. The focus is on using containers for local development and some of the underlying mechanics which aren't necessarily well explained in the innumerable Docker tutorials available online.
 
 The Dockerfiles are based on Ubuntu rather than Alpine or another small-footprint distribution, reflecting the focus on prototyping.
 
-Want to cover some of the niggles associated with using Docker on Mac.
-
 The images which rely on code use Python.
+
 
 ## Managing Docker objects
 
@@ -60,7 +59,21 @@ docker container rm $(docker container ps -a -q)
 
 This approach also works for stopping containers and removing other docker objects like images, volumes and containers.
 
-We can avoid some headaches by using `--rm` with the `docker run` command.
+#### Stopping conntainers
+
+It's rare to want to preserve containers (vs. images and volumes) between runs when developing. We typically use the `--rm` option with the `docker run` command so that the container is removed when it exits but we typically forget to add it too.
+
+A running container can be stopped with:
+
+```
+docker container stop container_name
+```
+
+And restarted with:
+
+```
+docker start contianer_name
+```
 
 ### Images
 
@@ -145,3 +158,16 @@ Remove *almost* all:
 ```
 docker network rm $(docker network ls -q)
 ```
+
+### Prune commands
+
+The following `docker` subcommands each have a `prune` command:
+
+- `network` - remove all unused networks
+- `container` - remove all stopped containers
+- `image` - remove all dangling images (and unused with `-a`)
+- `volume` - remove all unused volumes
+
+Be careful with the `volume prune` subcommand.
+
+Be careful in general with these because you're relying on Docker to choose what to delete. Other than with volumes, any unwanted deletions are usually easily fixed however.
