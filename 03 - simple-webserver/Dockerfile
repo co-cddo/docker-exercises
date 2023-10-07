@@ -24,12 +24,14 @@ RUN apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists
 
+
 CMD ["/app/server.py", "-D", "/www"]
 
 # Here are some variations on providing Docker with an initial command
 # Each works differently
-# ENTRYPOINT ["python3", "-m", "http.server"]
+# ENTRYPOINT ["/app/server.py", "-D", "/www"]
 
-# The difference between the two CMD variations is quite subtle
-# CMD ["python3", "-m", "http.server", "$PORT"]
-# CMD python3 -m http.server $PORT
+# The difference between the two CMD variations is quite subtle. The first (JSON) doesn't run the command through
+## a shell, so no variable substitution takes place. We're passing the literal string "$PORT".
+# CMD ["/app/server.py", "-D", "/www", "-P", "$PORT"]
+# CMD /app/server.py -D /www -P $PORT

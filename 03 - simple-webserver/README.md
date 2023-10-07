@@ -26,7 +26,7 @@ We've used `-t` before but only with `-i` which isn't needed here because we're 
 
 ### Access the server on localhost
 
-Let's try to access our web server by entering the provided address in the browser (`http://0.0.0.0:8081/`).
+Let's try to access our web server by entering the provided address in the browser (`http://127.0.0.1:8081/`).
 
 Let's try using curl (in another terminal window) to access the server on localhost:
 
@@ -44,9 +44,27 @@ We use `run` to start containers and `exec` to start processes in an *already ru
 
 With a command prompt, we can now try using curl, but this time from within the container. Use the same command we just tried.
 
+### Making the container's service available on localhost
+
+```
+docker run -t -p 8081:8081 cddo-simple-webserver
+```
+
+The `-p` switch ('publish') maps the container port on the right to the host port on the left. Try to access the server via the browser again.
+
+You'll often see documentation which says you need this line in the Dockerfile:
+
+```
+EXPOSE 8081
+```
+
+You don't. This is required for inter-container communication (so is sometimes essential). If the aim is to communicate between the container and the host, the `-p` switch is sufficient.
+
 ### Access the container via Docker's network
 
-Let's see what networks are being managed by Docker:
+The publish command solves our problem by forwarding a port. This tells us we must be dealing with a network.
+
+Let's stop our container and then see what networks are being managed by Docker:
 
 ```
 docker network ls
@@ -66,12 +84,6 @@ We have an IP address! We can also see which network the container is attached t
 docker network inspect bridge
 ```
 
-Now we have the IP address, we can try accessing the server via the browser, remembering to specify the port.
+Now we have the IP address, we can run the container with the original run command (no `-p option`) and try again to access the server via the browser, remembering to specify the port.
 
-### An easier way
 
-Let's add the following line to the simple-webserver Dockerfile, immediately above the `CMD` directive:
-
-```
-EXPOSE 8081
-```

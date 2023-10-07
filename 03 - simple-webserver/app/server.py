@@ -47,7 +47,7 @@ def get_opts():
 def run_server(host, port, root_dir):
     os.chdir(root_dir)
     web_server = HTTPServer((host, port), Handler)
-    print('Server started http://{0}:{1}'.format(host, port))
+    print('Server listening on port {0}'.format(port))
     try:
         web_server.serve_forever()
     except Exception as e:  # This is better than `except:` but not much
