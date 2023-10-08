@@ -166,7 +166,7 @@ The following `docker` subcommands each have a `prune` command:
 - `network` - remove all unused networks
 - `container` - remove all stopped containers
 - `image` - remove all dangling images (and unused with `-a`)
-- `volume` - remove all unused volumes
+- `volume` - remove all unused, anonymous volumes
 
 Be careful with the `volume prune` subcommand.
 
