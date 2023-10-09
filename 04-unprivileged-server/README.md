@@ -20,14 +20,6 @@ You often see advice that we shouldn't run container processes as root. It's pro
 
 ### Trying it out
 
-<!-- The permissions on the `app` and `www` directories in `03-simple-web-server` should be fine but let's make sure. Enter that directory and run:
-
-```
-sudo chmod -R 755 app www 
-```
-
-This allows the user owning the directories and their contents to read, write and execute. Members of the owning group can read and execute (root can always do anything). -->
-
 We're not going to worry about volumes and bind mounts for now:
 
 ```

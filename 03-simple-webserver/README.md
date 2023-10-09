@@ -60,8 +60,6 @@ EXPOSE 8081
 
 You don't. If we use the `-P` option with `docker run` it will publish all of the ports exposed in the Dockerfile, but to random ports on the host. It's mostly useful as a statement of intent.
 
-We'll see some examples with `docker compose` where it's important.
-
 ### Access the server via Docker's network (Linux)
 
 The publish command solves our problem by forwarding a port. This tells us we must be dealing with a network.
@@ -94,15 +92,15 @@ Being able to do this is essential to Docker's usefulness. Even when application
 
 Let's stop and remove our running containers.
 
-It's occasionally useful to get a container's IP address from within the container itself. We can do this with the `iproute2` package, which is included in the base image. Let's replace the `CMD` directive with:
+It's sometimes   useful to get a container's IP address from within the container itself. We can do this with the `iproute2` package, which is included in the base image. Let's replace the `CMD` directive with:
 
 ```
 CMD ["sh", "-c", "ip route|awk '/scope/ { print $9 }' && python3 /app/server.py -D /www"]
 ```
 
-Some additions to the run command. It's common to use `sh` like this for more complex commands but it's a shell, which means we need the `-i` option to close the container with a keyboard interrupt.
+Some additions to the run command. It's common to use `sh` like this for more complex commands but it's not actually a great idea. It means we're running our command through a shell, which means we need the `-i` option to close the container with a keyboard interrupt.
 
-`docker run --rm -it cddo-simple-webserver `
+`docker run --rm -it cddo-simple-webserver`
 
 Note: be careful not to include `-t` (or `i`) in `docker` commands which are run as part of CI/CD. There's no tty available and the build will fail, in GitHub actions at least.
 
@@ -213,4 +211,4 @@ There's a bigger difference between volumes and bind mounts on MacOS: volumes ar
 
 Note that we haven't used the `VOLUME` directive in our Dockerfile to anything here. Like `EXPOSE` it's often referred to in tutorials but isn't really what controls how volumes are managed. 
 
-The `VOLUME` directive does have one important effect: changes to the directory it's used with made within the Dockerfile, after it is used, have no effect.
+The `VOLUME` directive does have one important effect: changes to the directory it's used with, made within the Dockerfile after it is used have no effect.

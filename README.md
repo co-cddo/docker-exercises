@@ -6,6 +6,18 @@ The Dockerfiles are based on Ubuntu rather than Alpine or another small-footprin
 
 The images which rely on code use Python.
 
+## Exercises
+
+There are several sets of Dockerfiles/READMEs to work through, each which introduces different concepts:
+
+- **01-hello-world** - the most basic Dockerfile and run command possible
+- **02-base-image** - running downloaded images directly, installing packages, using images as the basis for other images.
+
+With a couple of stopped containers lurking, it's a good time to cover managing Docker objects (images, containers, volumes, networks) below.
+
+- **03-simple-webserver** - deploying a very basic application in Docker; Docker networking; volumes and bind mounts
+- **04-unprivileged-webserver** - how to avoid running services as root
+- **05-dynamic-user-server** - dynamically setting the container's user to match the host's user
 
 ## Managing Docker objects
 
