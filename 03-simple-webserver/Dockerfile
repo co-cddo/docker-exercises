@@ -24,7 +24,6 @@ RUN apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists
 
-
 CMD ["/app/server.py", "-D", "/www"]
 
 # Here are some variations on providing Docker with an initial command

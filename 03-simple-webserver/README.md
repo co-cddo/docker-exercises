@@ -100,13 +100,17 @@ CMD ["sh", "-c", "ip route|awk '/scope/ { print $9 }' && python3 /app/server.py 
 
 Some additions to the run command. It's common to use `sh` like this for more complex commands but it's not actually a great idea. It means we're running our command through a shell, which means we need the `-i` option to close the container with a keyboard interrupt.
 
-`docker run --rm -it cddo-simple-webserver`
+```
+docker run --rm -it cddo-simple-webserver
+```
 
 Note: be careful not to include `-t` (or `i`) in `docker` commands which are run as part of CI/CD. There's no tty available and the build will fail, in GitHub actions at least.
 
 Now let's get a command prompt in another, temporary container:
 
-`docker run --rm -it cddo-base-image /bin/bash`
+```
+docker run --rm -it cddo-base-image /bin/bash
+```
 
 We can now curl the webserver in the other container.
 
@@ -209,6 +213,6 @@ Volumes can be shared between containers. This can be done, to some extent, dyna
 
 There's a bigger difference between volumes and bind mounts on MacOS: volumes are stored within the VM.
 
-Note that we haven't used the `VOLUME` directive in our Dockerfile to anything here. Like `EXPOSE` it's often referred to in tutorials but isn't really what controls how volumes are managed. 
+Note that we haven't used the `VOLUME` directive in our Dockerfile to anything here. Like `EXPOSE` it's often referred to in tutorials but isn't really what controls how volumes are managed.
 
 The `VOLUME` directive does have one important effect: changes to the directory it's used with, made within the Dockerfile after it is used have no effect.

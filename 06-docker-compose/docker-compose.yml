@@ -17,6 +17,8 @@ services:
       cddo-simple-webserver:
         # The default condition
         condition: service_started
+      init:
+        condition: service_completed_successfully
 
   cddo-simple-webserver:
     # User a Dockerfile (and its directory)
@@ -29,6 +31,13 @@ services:
     ports:
       # Like passing '-p 8081:8081' to 'docker run'
       - "8081:8081"
+
+  init:
+    image: cyb3rjak3/html5validator:latest-alpine
+    command: ["html5validator", "--root", "."]
+    working_dir: /mnt
+    volumes:
+      - ../03-simple-webserver/www:/mnt
 
 volumes:
   root-homedir: {}
