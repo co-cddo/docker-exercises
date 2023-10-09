@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  cddo-command-prompt:
+    # Use an existing image. It has to be built/downloaded
+    image: cddo-base-image
+    command: ["/bin/bash"]
+    # Like passing '-i' to 'docker run'
+    stdin_open: true
+    # Like passing '-t' to 'docker run'
+    tty: true
+    volumes:
+      # A docker-managed volume, must be defined below
+      - root-homedir:/root
+    depends_on:
+      cddo-simple-webserver:
+        # The default condition
+        condition: service_started
+
+  cddo-simple-webserver:
+    # User a Dockerfile (and its directory)
+    build: ../03-simple-webserver
+    command: ["sh", "-c", "ip route|awk '/scope/ { print $$9 }' && python3 /app/server.py -D /www"]
+    volumes:
+      # Bind mounts. Not defined below
+      - ../03-simple-webserver/app:/app
+      - ../03-simple-webserver/www:/www
+    ports:
+      # Like passing '-p 8081:8081' to 'docker run'
+      - "8081:8081"
+
+volumes:
+  root-homedir: {}
