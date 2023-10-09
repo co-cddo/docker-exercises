@@ -62,7 +62,7 @@ You don't. If we use the `-P` option with `docker run` it will publish all of th
 
 ### Access the server via Docker's network (Linux)
 
-The publish command solves our problem by forwarding a port. This tells us we must be dealing with a network.
+The publish command solves our problem by forwarding a port, but it's a convenience which avoids us having to deal directly with the underlying network. 
 
 Let's stop our container and then see what networks are being managed by Docker:
 

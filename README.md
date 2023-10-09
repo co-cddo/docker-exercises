@@ -15,9 +15,10 @@ There are several sets of Dockerfiles/READMEs to work through, each which introd
 
 With a couple of stopped containers lurking, it's a good time to cover managing Docker objects (images, containers, volumes, networks) below.
 
-- **03-simple-webserver** - deploying a very basic application in Docker; Docker networking; volumes and bind mounts
-- **04-unprivileged-webserver** - how to avoid running services as root
-- **05-dynamic-user-server** - dynamically setting the container's user to match the host's user
+- **03-simple-webserver** - deploying a very basic application in Docker; Docker networking; volumes and bind mounts.
+- **04-unprivileged-webserver** - how to avoid running services as root.
+- **05-dynamic-user-server** - dynamically setting the container's user to match the host's user.
+- **06-docker-compose** - how docker compose can simplify managing a multi-container service.
 
 ## Managing Docker objects
 
