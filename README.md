@@ -20,6 +20,20 @@ With a couple of stopped containers lurking, it's a good time to cover managing 
 - **05-dynamic-user-server** - dynamically setting the container's user to match the host's user.
 - **06-docker-compose** - how docker compose can simplify managing a multi-container service.
 
+## Docker on MacOS
+
+There are some peculiarities resulting from the fact that Docker runs in a VM. 
+
+One is that we need Docker Desktop to be running before we can use Docker commands. We should ensure that VirtioFS is enabled in Docker Desktop settings (depending on the the version, this may be the default). Also note that while Docker Desktop is running, the allocated resources are resevred by it. 
+
+The Docker VM is designed to be invisible, but sometimes it's useful to get into it. We can do this with the following command:
+
+```
+nc -U ~/Library/Containers/com.docker.docker/Data/debug-shell.sock
+```
+
+These exercises rely on some basic OS packages and Python. Everything should run well on arm64 Macs. Famous last words.
+
 ## Managing Docker objects
 
 ### Containers
